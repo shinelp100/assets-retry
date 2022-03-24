@@ -1,3 +1,4 @@
+import './polyfill'
 import initAsync from './retry-async'
 import initSync from './retry-sync'
 import initCss from './retry-css'

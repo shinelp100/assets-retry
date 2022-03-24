@@ -76,12 +76,13 @@ export default function initSync(opts: InnerAssetsRetryOptions) {
         // 重载失败的url入栈
         currentCollector[failedProp].push(originalUrl)
         // 是否达到最大重试次数
-        const isFinalRetry = currentCollector[retryTimesProp] > opts[maxRetryCountProp]
-        if (isFinalRetry) {
+        const isFinalRetry = currentCollector[retryTimesProp] >= opts[maxRetryCountProp]
+        if (isFinalRetry && (target instanceof HTMLElement &&  target.hasAttribute(retryIdentifier))) {
             // srcPath: /ssi/js/jweixin-1.6.0true.js
             const [srcPath] = splitUrl(originalUrl, domainMap)
             onFail(srcPath)
         }
+
         // 没有可切换的域名或是达到最大重载次数
         if (!domainMap[currentDomain] || isFinalRetry) {
             // can not find a domain to switch
